@@ -32,7 +32,7 @@ async function uploadFile() {
   const fileMetadata = {
     name: 'swagger.json',
     parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
-  };
+  }; 
   const media = {
     mimeType: 'application/json',
     body: fs.createReadStream('http/output/swagger.json'),
