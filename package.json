@@ -1,4 +1,42 @@
 {
+  "name": "example-server-tsoa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@tsoa/cli": "^6.3.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "^140.0.1",
+    "reflect-metadata": "^0.2.2",
+    "tsoa": "^6.3.1",
+    "tsx": "^4.16.0",
+    "uuid": "^10.0.0"
+  },
+  "scripts": {
+    "dev": "node -r ts-node/register --watch --watch-preserve-output bin/startServer.ts",
+    "test": "node --test",
+    "generate-swagger": "npx tsoa routes && npx tsoa spec",
+    "upload-swagger": "tsx scripts/storingSchema.ts",
+    "swagger": "npm run generate-swagger && npm run upload-swagger",
+    "build": "npm run swagger",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.9",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
+    "eslint": "^9.5.0",
+    "husky": "^9.0.11",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2",
+    "yarn": "^1.22.22"
+  }
     "name": "example-server-tsoa",
     "version": "1.0.0",
     "main": "index.js",

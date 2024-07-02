@@ -1,0 +1,13 @@
+{
+    "entryFile": "bin/startServer.ts",
+    "noImplicitAdditionalProperties": "silently-remove-extras",
+    "controllerPathGlobs": ["http/controllers/*Controller.ts"],
+    "spec": {
+        "outputDirectory": "http/output",
+        "specVersion": 3
+    },
+    "routes": {
+        "routesDir": "http/routes"
+    }
+}  
+

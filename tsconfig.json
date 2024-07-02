@@ -41,7 +41,7 @@
         "noImplicitAny": false,
         "useUnknownInCatchVariables": true
     },
-    "include": ["**/*"],
+    "include": ["**/*", "../petsDecorator.ts"],
     "exclude": ["node_modules", "build", "coverage", "storage", "certificates", ".vscode"],
     "ts-node": {
         "files": true
