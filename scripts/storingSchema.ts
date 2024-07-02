@@ -16,7 +16,7 @@ async function uploadFile() {
 
   const drive = google.drive({ version: 'v3', auth });
 
-  try {
+  try { 
     const listResponse = await drive.files.list({
       q: `name='${fileName}' and trashed=false`,
       fields: 'files(id, name)',
