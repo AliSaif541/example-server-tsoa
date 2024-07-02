@@ -8,7 +8,7 @@ dotenv.config();
 async function uploadFile() {
   const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
   const fileName = `swagger-${branchName}.json`;
- 
+
   const auth = new google.auth.GoogleAuth({
     keyFile: './credentials.json',
     scopes: ['https://www.googleapis.com/auth/drive'],
