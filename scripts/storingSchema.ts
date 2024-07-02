@@ -1,10 +1,14 @@
 import { google } from 'googleapis';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import { execSync } from 'child_process';
 
 dotenv.config();
 
 async function uploadFile() {
+  const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+  const fileName = `swagger-${branchName}.json`;
+
   const auth = new google.auth.GoogleAuth({
     keyFile: './credentials.json',
     scopes: ['https://www.googleapis.com/auth/drive'],
@@ -14,7 +18,7 @@ async function uploadFile() {
 
   try {
     const listResponse = await drive.files.list({
-      q: "name='swagger.json' and trashed=false",
+      q: `name='${fileName}' and trashed=false`,
       fields: 'files(id, name)',
     });
 
@@ -30,7 +34,7 @@ async function uploadFile() {
   }
 
   const fileMetadata = {
-    name: 'swagger.json',
+    name: fileName,
     parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
   }; 
   const media = {
