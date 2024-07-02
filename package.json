@@ -40,5 +40,23 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2",
     "yarn": "^1.22.22"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "repositoryUrl": "https://github.com/your_user/your_repository.git",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
   }
 }
