@@ -7,7 +7,7 @@ dotenv.config();
 
 async function uploadFile() {
   const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const fileName = `swagger-${branchName}.json`;
+  const fileName = `schema-${branchName}.ts`;
 
   const auth = new google.auth.GoogleAuth({
     keyFile: './credentials.json',
@@ -38,8 +38,8 @@ async function uploadFile() {
     parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
   }; 
   const media = {
-    mimeType: 'application/json',
-    body: fs.createReadStream('http/output/swagger.json'),
+    mimeType: 'application/typescript',
+    body: fs.createReadStream('http/output/schema.ts'),
   };
 
   try {
