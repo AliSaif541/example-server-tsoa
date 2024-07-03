@@ -3,7 +3,7 @@ import * as path from 'path';
 
 const jsonFilePath = path.join(__dirname, '../http/output/swagger.json');
 const tsFilePath = path.join(__dirname, '../http/output/schema.ts');
- 
+
 fs.readFile(jsonFilePath, 'utf8', (err, data) => {
   if (err) {
     console.error('Error reading JSON file:', err);
