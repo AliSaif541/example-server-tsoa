@@ -10,7 +10,8 @@ fs.readFile(jsonFilePath, 'utf8', (err, data) => {
     return;
   }
 
-  const tsContent = `const data = ${data};\nexport default data;`;
+  const jsonData = JSON.parse(data);
+  const tsContent = `export const openapi = ${JSON.stringify(jsonData, null, 2)} as const;`;
 
   fs.writeFile(tsFilePath, tsContent, 'utf8', (err) => {
     if (err) {

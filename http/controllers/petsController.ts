@@ -12,7 +12,7 @@ import { GetAPetDTO } from "../../src/application/dto/getAPetDTO";
 export class PetsController extends Controller {
     @SuccessResponse("200", "Found")
     @Get("/")
-    @Middlewares(authMiddleware)
+    // @Middlewares(authMiddleware)
     public async getPets(@Res() success: TsoaResponse<200, IPet[]>, @Res() error: TsoaResponse<500, { status: string, message: string }>, @Query() query?: string): Promise<void> {
         try {
             const getPetsDTO = GetPetsDTO.createDTO(query || "");
