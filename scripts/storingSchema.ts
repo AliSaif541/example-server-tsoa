@@ -19,8 +19,8 @@ async function uploadFile() {
   });
  
   const drive = google.drive({ version: 'v3', auth });
-  
-  try {  
+
+  try {
     const listResponse = await drive.files.list({
       q: `name='${fileName}' and trashed=false`,
       fields: 'files(id, name)',
@@ -28,12 +28,11 @@ async function uploadFile() {
 
     const files = listResponse.data.files;
     if (files.length > 0) {
-      for (const file of files) {
-        await drive.files.delete({ fileId: file.id });
-      }
+      console.log(`File ${fileName} already exists. Skipping upload.`);
+      return;
     }
   } catch (error) {
-    console.error('Error searching/deleting files:', error);
+    console.error('Error searching files:', error);
     return;
   }
 
