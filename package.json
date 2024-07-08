@@ -10,6 +10,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "googleapis": "^140.0.1",
+    "openapi-typescript": "^7.0.2",
     "reflect-metadata": "^0.2.2",
     "tsoa": "^6.3.1",
     "tsx": "^4.16.0",
@@ -18,7 +19,7 @@
   "scripts": {
     "dev": "node -r ts-node/register --watch --watch-preserve-output bin/startServer.ts",
     "test": "node --test",
-    "generate-swagger": "npx tsoa routes && npx tsoa spec && tsx scripts/convertToTypescript",
+    "generate-swagger": "npx tsoa routes && npx tsoa spec && npx openapi-typescript http/output/swagger.json -o http/output/schema.ts",
     "upload-swagger": "tsx scripts/storingSchema.ts",
     "swagger": "npm run generate-swagger && npm run upload-swagger",
     "build": "npm run swagger",
