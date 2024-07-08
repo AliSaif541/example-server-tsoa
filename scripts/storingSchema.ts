@@ -7,7 +7,11 @@ dotenv.config();
 
 async function uploadFile() {
   const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const fileName = `schema-${branchName}.ts`;
+
+  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  const version = packageJson.version;
+
+  const fileName = `schema-${branchName}-${version}.ts`;
 
   const auth = new google.auth.GoogleAuth({
     keyFile: './credentials.json',
