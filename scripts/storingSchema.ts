@@ -1,5 +1,5 @@
 import { google } from 'googleapis';
-import fs from 'fs';
+import fs from 'fs/promises'; // Use fs.promises for async file operations
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import { execSync } from 'child_process';
@@ -7,14 +7,16 @@ import { execSync } from 'child_process';
 dotenv.config();
 
 async function getFileChecksum(filePath: string): Promise<string> {
-  return new Promise((resolve, reject) => {
+  try {
+    const fileBuffer = await fs.readFile(filePath);
+    
     const hash = crypto.createHash('md5');
-    const stream = fs.createReadStream(filePath);
+    hash.update(fileBuffer);
 
-    stream.on('data', data => hash.update(data));
-    stream.on('end', () => resolve(hash.digest('hex')));
-    stream.on('error', reject);
-  });
+    return hash.digest('hex');
+  } catch (error) {
+    throw new Error(`Error computing checksum: ${error.message}`);
+  }
 }
 
 async function uploadFile() {
