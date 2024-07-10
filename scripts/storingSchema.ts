@@ -1,5 +1,6 @@
 import { google } from 'googleapis';
-import fs from 'fs/promises';
+import fs from 'fs';
+import fsp from 'fs/promises';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import { execSync } from 'child_process';
@@ -8,7 +9,7 @@ dotenv.config();
 
 async function getFileChecksum(filePath: string): Promise<string> {
   try {
-    const fileBuffer = await fs.readFile(filePath);
+    const fileBuffer = await fsp.readFile(filePath);
     
     const hash = crypto.createHash('md5');
     hash.update(fileBuffer);
@@ -21,7 +22,7 @@ async function getFileChecksum(filePath: string): Promise<string> {
 
 async function uploadFile() {
   const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const localFilePath = 'http/output/schema.ts';
+  const localFilePath = 'http/output/swagger.json';
 
   const auth = new google.auth.GoogleAuth({
     keyFile: './credentials.json',
@@ -53,14 +54,14 @@ async function uploadFile() {
     }
 
     const randomHash = crypto.randomBytes(6).toString('hex');
-    const fileName = `schema-${branchName}-${randomHash}.ts`;
+    const fileName = `schema-${branchName}-${randomHash}.json`;
 
     const fileMetadata = {
       name: fileName,
       parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
     };
     const media = {
-      mimeType: 'application/typescript',
+      mimeType: 'application/json',
       body: fs.createReadStream(localFilePath),
     };
 
