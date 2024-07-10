@@ -2,8 +2,6 @@ import { IPet } from "../../src/domain/petEntitiy";
 import {AddPetsDTO} from "../../src/application/dto/addPetsDTO";
 import {GetPetsDTO} from "../../src/application/dto/getPetsDTO";
 import {petsService} from "../../src/application/petsService";
-// import HttpResponse from "../../src/application/utils/httpResponse";
-// import {TRequest, TResponse} from "../../src/types/Express";
 import {Body, Controller, Get, Post, Res, Query, Route, SuccessResponse, TsoaResponse, Middlewares} from "tsoa";
 import { authMiddleware } from "../middlewares/auth";
 import { GetAPetDTO } from "../../src/application/dto/getAPetDTO";
@@ -12,7 +10,7 @@ import { GetAPetDTO } from "../../src/application/dto/getAPetDTO";
 export class PetsController extends Controller {
     @SuccessResponse("200", "Found")
     @Get("/")
-    // @Middlewares(authMiddleware)
+    @Middlewares(authMiddleware)
     public async getPets(@Res() success: TsoaResponse<200, IPet[]>, @Res() error: TsoaResponse<500, { status: string, message: string }>, @Query() query?: string): Promise<void> {
         try {
             const getPetsDTO = GetPetsDTO.createDTO(query || "");
