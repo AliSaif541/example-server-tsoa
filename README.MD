@@ -68,3 +68,8 @@ To minimize unnecessary uploads and fetches, the schema file name also includes 
 
 ## Middleware
 A custom middleware checks for a specific token in the headers.
+
+### Step-by-Step Process
+1. **Create Middleware**: Define a middleware function using tsoa. This function checks for a specific token in the request headers.
+2. **Apply Middleware**: Apply the middleware to the routes using tsoa decorators. This ensures that every request to the protected routes must include the required token.
+3. **Token Verification**: The middleware function verifies the token. If the token is valid, the request proceeds; otherwise, an unauthorized error is returned.
