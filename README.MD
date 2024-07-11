@@ -42,7 +42,7 @@ This project is designed to create and manage API routes using `tsoa` and to aut
     npm run build
     ```
 
-## Schema Generation Upload Process
+## Schema Upload Process
 After generating the schema throigh `tsoa`, `storingSchema.ts` script uploads the generated `schema.json` to Google Drive. This script is executed before every commit or build using `husky`.
 
 ### Step-by-Step Process
