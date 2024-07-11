@@ -38,7 +38,7 @@ async function uploadFile() {
     });
 
     const files = listResponse.data.files;
-    if (files.length > 0) {
+    if (files?.length > 0) {
       const remoteFileId = files[0].id;
       const remoteFileName = files[0].name;
       const remoteFileChecksum = files[0].md5Checksum;
@@ -50,27 +50,49 @@ async function uploadFile() {
         return;
       }
 
-      await drive.files.delete({ fileId: remoteFileId });
+      const randomHash = crypto.randomBytes(6).toString('hex');
+      const newFileName = `schema-${branchName}-${randomHash}.json`;
+
+      await drive.files.update({
+        fileId: remoteFileId,
+        requestBody: {
+          name: newFileName,
+        },
+      });
+
+      const media = {
+        mimeType: 'application/json',
+        body: fs.createReadStream(localFilePath),
+      };
+
+      const updateResponse = await drive.files.update({
+        fileId: remoteFileId,
+        media: media,
+      });
+
+      console.log('Updated file with Id:', updateResponse.data.id);
+
+    } 
+    else {
+      const randomHash = crypto.randomBytes(6).toString('hex');
+      const fileName = `schema-${branchName}-${randomHash}.json`;
+
+      const fileMetadata = {
+        name: fileName,
+        parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
+      };
+      const media = {
+        mimeType: 'application/json',
+        body: fs.createReadStream(localFilePath),
+      };
+
+      const response = await drive.files.create({
+        requestBody: fileMetadata,
+        media: media,
+        fields: 'id',
+      });
+      console.log('Uploaded new file with Id:', response.data.id);
     }
-
-    const randomHash = crypto.randomBytes(6).toString('hex');
-    const fileName = `schema-${branchName}-${randomHash}.json`;
-
-    const fileMetadata = {
-      name: fileName,
-      parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
-    };
-    const media = {
-      mimeType: 'application/json',
-      body: fs.createReadStream(localFilePath),
-    };
-
-    const response = await drive.files.create({
-      requestBody: fileMetadata,
-      media: media,
-      fields: 'id',
-    });
-    console.log('Uploaded new file with Id:', response.data.id);
 
   } catch (error) {
     console.error('Error:', error);
