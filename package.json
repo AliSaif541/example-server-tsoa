@@ -22,7 +22,7 @@
     "dev": "node -r ts-node/register --watch --watch-preserve-output bin/startServer.ts",
     "test": "node --test",
     "generate-swagger": "npx tsoa routes && npx tsoa spec",
-    "upload-swagger": "tsx scripts/storingSchema.ts",
+    "upload-swagger": "tsx storageProcess/implementingUpload.ts",
     "swagger": "npm run generate-swagger && npm run upload-swagger",
     "build": "npm run swagger",
     "prepare": "husky"
