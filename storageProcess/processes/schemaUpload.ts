@@ -36,14 +36,12 @@ export class SchemaUploadProcess extends UploadProcess {
           return;
         }
 
-        const randomHash = crypto.randomBytes(6).toString('hex');
-        const newFileName = `schema-${branchName}-${randomHash}.json`;
+        const newFileName = `schema-${branchName}-${localFileChecksum}.json`;
 
         await this.storageService.updateFile(remoteFileId, newFileName, localFilePath);
         console.log('Updated file with Id:', remoteFileId);
       } else {
-        const randomHash = crypto.randomBytes(6).toString('hex');
-        const fileName = `schema-${branchName}-${randomHash}.json`;
+        const fileName = `schema-${branchName}-${localFileChecksum}.json`;
 
         const fileId = await this.storageService.createFile(fileName, localFilePath);
         console.log('Uploaded new file with Id:', fileId);

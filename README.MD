@@ -59,12 +59,12 @@ The schema file name includes the branch name to differentiate schemas from diff
 3. **Upload with Branch Name**: The schema file with the appended branch name is then uploaded to Google Drive. This allows multiple schemas from different branches to coexist in the same folder without overwriting each other.
 
 ## Schema Hashing
-To minimize unnecessary uploads and fetches, the schema file name also includes a hash. The MD5 checksum of the schema file is calculated and compared to avoid uploading identical files.
+To minimize unnecessary uploads and fetches, the schema file name also includes a checksum. The MD5 checksum of the schema file is calculated and compared to avoid uploading identical files.
 
 ### Step-by-Step Process
 1. **Calculate MD5 Checksum**: Before uploading, the `storingSchema.ts` script calculates the MD5 checksum of the local schema.json file.
 2. **Compare with Remote**: The script retrieves the checksum of the existing schema file on Google Drive. If the checksums match, the files are identical.
-3. **Conditional Upload**: If the checksums are different, the script appends the new hash to the file name and uploads the updated schema. If they match, the upload is skipped to avoid redundant uploads.
+3. **Conditional Upload**: If the checksums are different, the script appends the checksum to the file name and uploads the updated schema. If they match, the upload is skipped to avoid redundant uploads.
 
 ## Middleware
 A custom middleware checks for a specific token in the headers.
